@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Button Hydra</title>
+  </head>
+  <body>
+    <h3 id="introPrompt"> 
+        Press:<br>
+         1. For Button Hydra<br>
+         2. For Button Drawing<br>
+    </h3>
+
+    <button type="button" id="introButtonHydra" onclick="hydraController()">1. Button Hydra</button>
+    <button type="button" id="introButtonDrawing" onclick="drawingController()">2. Button Drawing</button>
+
+	<script>
+
+        let buttons = 1;
+
+        function hideIntro(){
+            const prompt = document.getElementById("introPrompt");
+            prompt.remove();
+            const bhydra = document.getElementById("introButtonHydra");
+            bhydra.remove();
+            const bdraw = document.getElementById("introButtonDrawing");
+            bdraw.remove();
+        }
+
+        function drawingController() {
+            hideIntro();
+            //removes clicked button
+            function buttonRemove (buttonid){
+                document.getElementById(buttonid).style.visibility= 'hidden';
+            }
+
+            //generates 1000ish buttons
+            for(let i=0;i<1500;i++) {
+                    //adds new button
+                    buttons++;
+                    const buttonx = document.createElement("button");
+                    buttonx.innerText = "Click Me!";
+                    buttonx.id = "Button " + buttons;
+                    buttonx.addEventListener('click', () => {
+                        buttonRemove(buttonx.id);
+                    })
+                    document.body.appendChild(buttonx);
+                }
+        }
+
+        function hydraController () {
+            hideIntro();
+
+            //create first hydra button
+            const button1 = document.createElement("button");
+            button1.innerText = "Click Me!";
+            button1.id = "Button 1";
+            //calls buttonAdd when pressed
+            button1.addEventListener('click', () => {
+                buttonAdd(button1.id);
+            })
+            document.body.appendChild(button1);
+
+            //adds 2 new button with same properties of the first, and removes clicked button
+            function buttonAdd(buttonid) {
+                //remove clicked button
+                document.getElementById(buttonid).style.visibility= 'hidden';
+                //for loop adds 2 new buttons
+                for(let i=0;i<2;i++) {
+                    //adds new button
+                    buttons++;
+                    if (buttons > 1000) {
+                        stackOverflow();
+                    }
+                    const buttonx = document.createElement("button");
+                    buttonx.innerText = "Click Me!";
+                    buttonx.id = "Button " + buttons;
+                    buttonx.addEventListener('click', () => {
+                        buttonAdd(buttonx.id);
+                    })
+                    document.body.appendChild(buttonx);
+                }
+
+                
+            }
+        }
+
+        function getRandomInt(max) {
+            return (Math.floor(Math.random() * max));
+        }
+
+        function stackOverflow(){
+            stackOverflow();
+        }
+    </script>
+  </body>
+</html>
